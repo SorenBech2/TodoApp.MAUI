@@ -38,6 +38,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	  <CodesignKey>Apple Development: Created via API (TD8P69U6V2)</CodesignKey>
+	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -65,8 +70,8 @@
 	<ItemGroup>
       <PackageReference Include="CommunityToolkit.Datasync.Client" Version="8.0.5" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 </Project>
