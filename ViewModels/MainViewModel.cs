@@ -6,6 +6,7 @@ using CommunityToolkit.Datasync.Client;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using TodoApp.MAUI.Models;
 using TodoApp.MAUI.Services;
 
@@ -51,10 +52,19 @@ public partial class MainViewModel(AppDbContext context, IAlertService alertServ
             TodoItem? item = await context.TodoItems.FindAsync([itemId]);
             if (item is not null)
             {
+                Debug.WriteLine($"item UpdatedAt is (before writing changes to SQLite) : {item.UpdatedAt}");
+                Debug.WriteLine($"item IsComplete is (before writing changes to SQLite) : {item.IsComplete}");
+
                 item.IsComplete = !item.IsComplete;
                 _ = context.TodoItems.Update(item);
                 _ = Items.ReplaceIf(x => x.Id == itemId, item);
                 _ = await context.SaveChangesAsync(cancellationToken);
+            }
+            TodoItem? itemAfter = await context.TodoItems.FindAsync([itemId]);
+            if (itemAfter is not null)
+            {
+                Debug.WriteLine($"item UpdatedAt is (after writing changes to SQLite) : {itemAfter.UpdatedAt.ToString()}");
+                Debug.WriteLine($"item IsComplete is (after writing changes to SQLite) : {itemAfter.IsComplete}");
             }
         }
         catch (Exception ex)

@@ -9,6 +9,9 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+#if IOS
+        AppContext.SetSwitch("System.Reflection.NullabilityInfoContext.IsSupported", true);
+#endif
         MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
