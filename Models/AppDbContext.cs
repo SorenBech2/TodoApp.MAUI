@@ -18,7 +18,7 @@ public partial class AppDbContext(DbContextOptions<AppDbContext> options) : Offl
         HttpClientOptions clientOptions = new()
         {
             Endpoint = new Uri("https://app-nn4uurie34h7s.azurewebsites.net//"),
-            HttpPipeline = new HttpMessageHandler[] { new LoggingHandler(new HttpClientHandler()) }
+            HttpPipeline = new HttpMessageHandler[] { new LoggingHandler() }
         };
         _ = optionsBuilder.UseHttpClientOptions(clientOptions);
     }
@@ -61,10 +61,10 @@ public class DbContextInitializer(AppDbContext context) : IDbInitializer
 // Logginghandler
 public class LoggingHandler : DelegatingHandler
 {
-    public LoggingHandler(HttpMessageHandler innerHandler)
-        : base(innerHandler)
-    {
-    }
+    //public LoggingHandler(HttpMessageHandler innerHandler)
+    //    : base(innerHandler)
+    //{
+    //}
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
